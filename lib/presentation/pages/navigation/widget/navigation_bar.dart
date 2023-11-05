@@ -15,6 +15,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
     return AppBar(
       title: Stack(
         alignment: AlignmentDirectional.centerStart,
@@ -27,6 +28,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 _buildButton(
                   context,
                   label: 'Beranda',
+                  isSelected: location == '/',
                   onPressed: () {
                     context.go('/');
                   },
@@ -34,6 +36,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 _buildButton(
                   context,
                   label: 'Profile',
+                  isSelected: location.startsWith('/profile'),
                   onPressed: () {
                     context.go('/profile');
                   },
@@ -41,6 +44,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 _buildButton(
                   context,
                   label: 'Tentang Kami',
+                  isSelected: location.startsWith('/about'),
                   onPressed: () {
                     context.go('/about');
                   },
@@ -89,6 +93,7 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
     BuildContext context, {
     VoidCallback? onPressed,
     required String label,
+    bool isSelected = false,
   }) {
     return TextButton(
       style: TextButton.styleFrom(
@@ -96,12 +101,22 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
           vertical: 16.0,
           horizontal: 20.0,
         ),
+        shape: isSelected
+            ? RoundedRectangleBorder(
+                side: BorderSide(
+                  width: 2.0,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(360.0)),
+              )
+            : null,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       onPressed: onPressed,
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
+          color: isSelected ? Theme.of(context).colorScheme.secondary : null,
           fontWeight: FontWeight.w700,
           fontSize: 16.0,
         ),
