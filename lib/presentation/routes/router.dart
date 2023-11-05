@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../injector.dart';
 import '../blocs/auth/auth_bloc.dart';
+import '../pages/contact/contact_page.dart';
 import '../pages/home/home_page.dart';
 import '../pages/navigation/navigation_page.dart';
 import '../pages/profile/profile_page.dart';
@@ -32,6 +33,10 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/profile',
           builder: (context, state) => const ProfilePage(),
+        ),
+        GoRoute(
+          path: '/contact',
+          builder: (context, state) => const Contact(),
         ),
       ],
     ),

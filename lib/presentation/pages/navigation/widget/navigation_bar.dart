@@ -43,10 +43,10 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 _buildButton(
                   context,
-                  label: 'Tentang Kami',
-                  isSelected: location.startsWith('/about'),
+                  label: 'Contact',
+                  isSelected: location.startsWith('/contact'),
                   onPressed: () {
-                    context.go('/about');
+                    context.go('/contact');
                   },
                 ),
               ],
