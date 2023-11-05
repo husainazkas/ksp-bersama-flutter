@@ -263,19 +263,10 @@ abstract final class AppTheme {
       );
 
   static TextTheme _buildTextTheme(ThemeData base) {
-    return base.textTheme
-        .copyWith(
-          // This also never affected to any button's theme text style
-          labelLarge: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
-          bodyMedium: const TextStyle(fontSize: 12.0),
-        )
-        .apply(
-          fontFamily: 'Montserrat',
-          displayColor: base.colorScheme.onBackground,
-          bodyColor: base.colorScheme.onBackground,
-        );
+    return base.textTheme.apply(
+      fontFamily: 'Montserrat',
+      displayColor: base.colorScheme.onBackground,
+      bodyColor: base.colorScheme.onBackground,
+    );
   }
 }
