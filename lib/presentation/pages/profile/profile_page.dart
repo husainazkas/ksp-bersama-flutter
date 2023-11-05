@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../paints/shapes.dart';
@@ -11,38 +13,55 @@ class ProfilePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomPaint(
-          painter: SimpleShape1(
-            color: Theme.of(context).colorScheme.primary.withLightness(0.475),
+        DecoratedBox(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/unindra-b-1.jpg'),
+              fit: BoxFit.cover,
+            ),
           ),
-          child: SizedBox(
-            width: double.infinity,
-            height: MediaQuery.sizeOf(context).height * 0.925,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 64.0,
-                vertical: 54.0,
-              ).add(const EdgeInsets.only(top: 168.0)),
-              child: DefaultTextStyle.merge(
-                style: const TextStyle(fontWeight: FontWeight.w600),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Koperasi Simpan Pinjam Bersama (Kampus UNINDRA)',
-                      style: TextStyle(
-                        fontSize: 36.0,
-                        fontWeight: FontWeight.w700,
+          child: DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.black38),
+            child: DefaultTextStyle.merge(
+              style: const TextStyle(color: Colors.white),
+              child: CustomPaint(
+                painter: SimpleShape1(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withLightness(0.475),
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.sizeOf(context).height * 0.925,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 64.0,
+                      vertical: 54.0,
+                    ).add(const EdgeInsets.only(top: 168.0)),
+                    child: DefaultTextStyle.merge(
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Koperasi Simpan Pinjam Bersama (Kampus UNINDRA)',
+                            style: TextStyle(
+                              fontSize: 36.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            'Jl. Raya Tengah No.80, Gedong, Kec. Ps. Rebo, Kota Jakarta Timur, DKI Jakarta',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                          Text(
+                              'Telp: (021) 87797409 - 87781300 HP/WhatsApp: 081318998016 Email: kampus@unindra.ac.id')
+                        ],
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Jl. Raya Tengah No.80, Gedong, Kec. Ps. Rebo, Kota Jakarta Timur, DKI Jakarta',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    Text(
-                        'Telp: (021) 87797409 - 87781300 HP/WhatsApp: 081318998016 Email: kampus@unindra.ac.id')
-                  ],
+                  ),
                 ),
               ),
             ),
