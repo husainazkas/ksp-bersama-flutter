@@ -10,10 +10,15 @@ class NavigationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const NavigationBar(),
-          Expanded(child: child),
+      body: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: NavigationBar(),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: child,
+          )
         ],
       ),
     );

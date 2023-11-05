@@ -33,9 +33,9 @@ class NavigationBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 _buildButton(
                   context,
-                  label: 'Laporan Keuangan',
+                  label: 'Profile',
                   onPressed: () {
-                    context.go('/financial-report');
+                    context.go('/profile');
                   },
                 ),
                 _buildButton(

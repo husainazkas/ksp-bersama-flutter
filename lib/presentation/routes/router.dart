@@ -6,6 +6,7 @@ import '../../injector.dart';
 import '../blocs/auth/auth_bloc.dart';
 import '../pages/home/home_page.dart';
 import '../pages/navigation/navigation_page.dart';
+import '../pages/profile/profile_page.dart';
 import 'router_refresh_stream.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -27,6 +28,10 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/',
           builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfilePage(),
         ),
       ],
     ),
