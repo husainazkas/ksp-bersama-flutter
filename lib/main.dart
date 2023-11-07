@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'firebase_options.dart';
 import 'injector.dart';
@@ -15,8 +14,6 @@ Future<void> main() async {
   if (kDebugMode) {
     Bloc.observer = SimpleBlocObserver();
   }
-
-  usePathUrlStrategy();
 
   await initLocator();
 
