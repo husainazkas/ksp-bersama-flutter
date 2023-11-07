@@ -10,13 +10,13 @@ body {
 }
 
 #circular-progress {
-    border: 10px solid #f3f3f3;
-    /* Light grey */
-    border-top: 10px solid #4CAF50;
-    /* Blue */
+    border: 6px solid #A5D6A7;
+    /* Light green */
+    border-top: 6px solid #2E7D32;
+    /* Green */
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     animation: spin 1s linear infinite;
     margin: auto;
 }
