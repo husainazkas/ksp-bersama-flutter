@@ -16,13 +16,13 @@ class Contact extends StatelessWidget {
     ),
     ContactItemModel(
       fullName: 'Paulieta Gracia Lim',
-      imageAsset: 'assets/images/contacts/paulieta.jpg',
+      imageAsset: 'assets/images/contacts/paulieta.jpeg',
       npm: '202143500231',
       title: 'UI/UX Designer',
     ),
     ContactItemModel(
       fullName: 'Trio Saputra',
-      imageAsset: 'assets/images/contacts/trio.jpg',
+      imageAsset: 'assets/images/contacts/trio.jpeg',
       npm: '202143500276',
       title: 'Technical Writer',
     ),
