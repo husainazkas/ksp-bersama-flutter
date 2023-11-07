@@ -5,13 +5,9 @@ class CooperationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 36.0,
-        vertical: 56.0,
-      ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(36.0, 32.0, 36.0, 42),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'Koperasi',
@@ -92,7 +88,7 @@ class CooperationPage extends StatelessWidget {
                   TextSpan(text: '\n', style: TextStyle(fontSize: 4.0)),
                   TextSpan(
                     text:
-                        'Koperasi di Indonesia, menurut UU tahun 1992, didefinisikan sebagai badan usaha yang beranggotakan orang-seorang atau badan hukum koperasi dengan melandaskan kegiatannya berdasarkan prinsip-prinsip koperasi sekaligus sebagai gerakan ekonomi rakyat yang berdasar atas asas kekeluargaan. Di Indonesia, prinsip koperasi telah dicantumkan dalam UU No. 12 Tahun 1967 dan UU No. 25 Tahun 1992. Prinsip koperasi di Indonesia kurang lebih sama dengan prinsip yang diakui dunia internasional dengan adanya sedikit perbedaan, yaitu adanya penjelasan mengenai SHU (Sisa Hasil Usaha).\n\n\n',
+                        'Koperasi di Indonesia, menurut UU tahun 1992, didefinisikan sebagai badan usaha yang beranggotakan orang-seorang atau badan hukum koperasi dengan melandaskan kegiatannya berdasarkan prinsip-prinsip koperasi sekaligus sebagai gerakan ekonomi rakyat yang berdasar atas asas kekeluargaan. Di Indonesia, prinsip koperasi telah dicantumkan dalam UU No. 12 Tahun 1967 dan UU No. 25 Tahun 1992. Prinsip koperasi di Indonesia kurang lebih sama dengan prinsip yang diakui dunia internasional dengan adanya sedikit perbedaan, yaitu adanya penjelasan mengenai SHU (Sisa Hasil Usaha).',
                   ),
                 ],
               ),
