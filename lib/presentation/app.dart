@@ -25,7 +25,7 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'Koperasi Simpan Pinjam Bersama',
+        title: 'Kelompok 10 - Koperasi',
         routeInformationParser: router.routeInformationParser,
         routeInformationProvider: router.routeInformationProvider,
         routerDelegate: router.routerDelegate,
