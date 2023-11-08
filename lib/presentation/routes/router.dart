@@ -7,8 +7,8 @@ import '../blocs/auth/auth_bloc.dart';
 import '../pages/about_us/about_us_page.dart';
 import '../pages/contact_us/contact_us_page.dart';
 import '../pages/home/home_page.dart';
-import '../pages/navigation/navigation_page.dart';
 import '../pages/loan/loan_page.dart';
+import '../pages/navigation/navigation_page.dart';
 import '../pages/saving/saving_page.dart';
 import 'router_refresh_stream.dart';
 
