@@ -4,11 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../injector.dart';
 import '../blocs/auth/auth_bloc.dart';
-import '../pages/contact/contact_page.dart';
-import '../pages/cooperation/cooperation_page.dart';
+import '../pages/about_us/about_us_page.dart';
+import '../pages/contact_us/contact_us_page.dart';
 import '../pages/home/home_page.dart';
+import '../pages/loan/loan_page.dart';
 import '../pages/navigation/navigation_page.dart';
-import '../pages/profile/profile_page.dart';
+import '../pages/saving/saving_page.dart';
 import 'router_refresh_stream.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -32,16 +33,20 @@ final GoRouter router = GoRouter(
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/profile',
-          builder: (context, state) => const ProfilePage(),
+          path: '/loan',
+          builder: (context, state) => const LoanPage(),
         ),
         GoRoute(
-          path: '/cooperation',
-          builder: (context, state) => const CooperationPage(),
+          path: '/saving',
+          builder: (context, state) => const SavingPage(),
         ),
         GoRoute(
-          path: '/contact',
-          builder: (context, state) => const Contact(),
+          path: '/about-us',
+          builder: (context, state) => const AboutUsPage(),
+        ),
+        GoRoute(
+          path: '/contact-us',
+          builder: (context, state) => const ContactUs(),
         ),
       ],
     ),

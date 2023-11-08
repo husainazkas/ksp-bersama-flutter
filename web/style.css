@@ -10,9 +10,9 @@ body {
 }
 
 #circular-progress {
-    border: 6px solid #A5D6A7;
+    border: 6px solid #66BB6A80;
     /* Light green */
-    border-top: 6px solid #2E7D32;
+    border-top: 6px solid #66BB6A;
     /* Green */
     border-radius: 50%;
     width: 60px;
