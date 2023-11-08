@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'color_palette.dart';
+
 abstract final class AppTheme {
   static bool isDarkMode(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;
@@ -11,10 +13,19 @@ abstract final class AppTheme {
   static ThemeData get lightTheme {
     final ThemeData base = ThemeData.light().copyWith(
       colorScheme: const ColorScheme.light(
-        primary: Colors.green,
-        secondary: Colors.yellow,
+        primary: ColorPalette.primaryColor,
+        onPrimary: ColorPalette.onPrimaryColor,
+        secondary: ColorPalette.primaryColor,
+        onSecondary: ColorPalette.onPrimaryColor,
+        background: ColorPalette.backgroundColor,
+        onBackground: ColorPalette.onBackgroundColor,
+        surface: ColorPalette.backgroundColor,
+        onSurface: ColorPalette.onBackgroundColor,
+        onSurfaceVariant: ColorPalette.onBackgroundVariantColor,
+        outlineVariant: ColorPalette.dividerColor,
       ),
-      primaryColor: Colors.green,
+      primaryColor: ColorPalette.primaryColor,
+      dividerColor: ColorPalette.dividerColor,
     );
     return _buildThemeData(base);
   }
@@ -148,7 +159,6 @@ abstract final class AppTheme {
         filled: true,
         isDense: true,
         fillColor: theme.colorScheme.surface,
-        focusColor: Colors.white,
         contentPadding:
             const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
         errorStyle: TextStyle(color: theme.colorScheme.error),
@@ -170,13 +180,8 @@ abstract final class AppTheme {
       IconButtonThemeData(
         style: IconButton.styleFrom(
           shape: const CircleBorder(),
-          // tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          // visualDensity: VisualDensity.compact,
-          // minimumSize: Size.zero,
-          // backgroundColor: theme.colorScheme.primary,
-          // foregroundColor: theme.colorScheme.onPrimary,
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.red,
+          backgroundColor: theme.colorScheme.onPrimary,
+          foregroundColor: theme.colorScheme.primary,
         ),
       );
 
@@ -212,7 +217,7 @@ abstract final class AppTheme {
             fontWeight: FontWeight.w400,
           ),
           disabledBackgroundColor: theme.disabledColor,
-          disabledForegroundColor: Colors.white,
+          disabledForegroundColor: theme.colorScheme.onBackground,
           elevation: 0,
           shape: const StadiumBorder(),
         ),
@@ -263,10 +268,16 @@ abstract final class AppTheme {
       );
 
   static TextTheme _buildTextTheme(ThemeData base) {
-    return base.textTheme.apply(
-      fontFamily: 'Montserrat',
-      displayColor: base.colorScheme.onBackground,
-      bodyColor: base.colorScheme.onBackground,
-    );
+    return base.textTheme
+        .apply(
+          fontFamily: 'Inter',
+          displayColor: base.colorScheme.onBackground,
+          bodyColor: base.colorScheme.onBackground,
+        )
+        .copyWith(
+          titleLarge: TextStyle(color: base.colorScheme.onSurfaceVariant),
+          titleMedium: TextStyle(color: base.colorScheme.onSurfaceVariant),
+          titleSmall: TextStyle(color: base.colorScheme.onSurfaceVariant),
+        );
   }
 }
