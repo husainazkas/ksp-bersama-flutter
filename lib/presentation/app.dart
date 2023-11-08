@@ -37,8 +37,9 @@ class App extends StatelessWidget {
               child ?? const SizedBox(),
               state.when(
                 running: (_) => LinearProgressIndicator(
-                  color: Colors.green[800],
-                  backgroundColor: Colors.green[200],
+                  color: Theme.of(context).colorScheme.primary,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.5),
                   minHeight: 6.0,
                 ),
                 stopped: () => const SizedBox(),
