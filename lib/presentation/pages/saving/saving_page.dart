@@ -74,7 +74,7 @@ class _FirstSection extends StatelessWidget {
     if (size.width <= 860) {
       return Column(
         children: [
-          _buildWelcome(context),
+          _buildWelcome(context, titleTextAlign: TextAlign.center),
           _buildLogin(context),
         ],
       );
@@ -95,7 +95,7 @@ class _FirstSection extends StatelessWidget {
     );
   }
 
-  Widget _buildWelcome(BuildContext context) {
+  Widget _buildWelcome(BuildContext context, {TextAlign? titleTextAlign}) {
     return Padding(
       padding: EdgeInsets.all(width(
         context,
@@ -107,6 +107,7 @@ class _FirstSection extends StatelessWidget {
         children: [
           Text(
             'Koperasi Simpan Pinjam Bersama (UNINDRA) Simpanan',
+            textAlign: titleTextAlign,
             style: TextStyle(
               fontSize: width(
                 context,
@@ -127,6 +128,7 @@ class _FirstSection extends StatelessWidget {
           ),
           Text(
             'Selamat datang di halaman simpanan Koperasi Simpan Pinjam Bersama (UNINDRA) Simpanan, dapatkan informasi menarik seputar simpanan anggota',
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: width(
                 context,
@@ -227,43 +229,60 @@ class _SecondSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            'PRODUK SIMPANAN',
-            style: TextStyle(
-              fontSize: width(
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: width(
                 context,
-                desktop: 24.0,
-                tablet: 20.0,
-                mobile: 16.0,
-              ),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: width(
-              context,
-              desktop: 59.0,
-              tablet: 36.0,
-              mobile: 20.0,
-            ),
-          ),
-          Text(
-            'Beberapa produk simpanan berjangka yang ditawarkan',
-            style: TextStyle(
-              fontSize: width(
-                context,
-                desktop: 22.0,
-                tablet: 18.0,
-                mobile: 16.0,
+                desktop: 220.0,
+                tablet: 140.0,
+                mobile: 56.0,
               ),
             ),
-          ),
-          SizedBox(
-            height: width(
-              context,
-              desktop: 167.0,
-              tablet: 120.0,
-              mobile: 90.0,
+            child: DefaultTextStyle.merge(
+              textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Text(
+                    'PRODUK SIMPANAN',
+                    style: TextStyle(
+                      fontSize: width(
+                        context,
+                        desktop: 24.0,
+                        tablet: 20.0,
+                        mobile: 16.0,
+                      ),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    height: width(
+                      context,
+                      desktop: 59.0,
+                      tablet: 36.0,
+                      mobile: 20.0,
+                    ),
+                  ),
+                  Text(
+                    'Beberapa produk simpanan berjangka yang ditawarkan',
+                    style: TextStyle(
+                      fontSize: width(
+                        context,
+                        desktop: 22.0,
+                        tablet: 18.0,
+                        mobile: 16.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: width(
+                      context,
+                      desktop: 167.0,
+                      tablet: 120.0,
+                      mobile: 90.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
