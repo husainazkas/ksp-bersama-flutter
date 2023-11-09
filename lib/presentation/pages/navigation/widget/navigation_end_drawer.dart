@@ -27,7 +27,7 @@ class NavigationEndDrawer extends StatelessWidget {
             const SizedBox(height: 20.0),
             _buildButton(
               context,
-              label: 'Loan',
+              label: 'Pinjaman',
               onPressed: () {
                 context.pop();
                 context.go('/loan');
