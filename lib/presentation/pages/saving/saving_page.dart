@@ -14,53 +14,12 @@ class SavingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LoginFormBloc>(
-      create: (context) => sl(),
-      child: BlocConsumer<LoginFormBloc, LoginFormState>(
-        listener: (context, state) {
-          if (state.isLoggingIn) {
-            context.read<LoadingBloc>().add(const LoadingEvent.started());
-          } else {
-            context.read<LoadingBloc>().add(const LoadingEvent.stopped());
-          }
-
-          state.loginFailureOrSuccessOption.fold(
-            () => null,
-            (a) {
-              a.fold(
-                (l) =>
-                    ScaffoldMessenger.of(context).showSnackBar(FailureSnackBar(
-                  message: 'Terjadi error tidak terduga',
-                )),
-                (r) => r.fold(
-                  () => ScaffoldMessenger.of(context)
-                      .showSnackBar(InformationSnackBar(
-                    message: 'Masuk dengan Google dibatalkan',
-                  )),
-                  (a) {
-                    ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(
-                      message: 'Berhasil masuk ke Google',
-                    ));
-                    context
-                        .read<AuthBloc>()
-                        .add(const AuthEvent.authCheckRequested());
-                  },
-                ),
-              );
-            },
-          );
-        },
-        builder: (context, state) => IgnorePointer(
-          ignoring: state.isLoggingIn,
-          child: const Column(
-            children: [
-              _FirstSection(),
-              _SecondSection(),
-              _ThirdSection(),
-            ],
-          ),
-        ),
-      ),
+    return const Column(
+      children: [
+        _FirstSection(),
+        _SecondSection(),
+        _ThirdSection(),
+      ],
     );
   }
 }
@@ -74,7 +33,7 @@ class _FirstSection extends StatelessWidget {
     if (size.width <= 860) {
       return Column(
         children: [
-          _buildWelcome(context),
+          _buildWelcome(context, titleTextAlign: TextAlign.center),
           _buildLogin(context),
         ],
       );
@@ -95,7 +54,7 @@ class _FirstSection extends StatelessWidget {
     );
   }
 
-  Widget _buildWelcome(BuildContext context) {
+  Widget _buildWelcome(BuildContext context, {TextAlign? titleTextAlign}) {
     return Padding(
       padding: EdgeInsets.all(width(
         context,
@@ -107,6 +66,7 @@ class _FirstSection extends StatelessWidget {
         children: [
           Text(
             'Koperasi Simpan Pinjam Bersama (UNINDRA) Simpanan',
+            textAlign: titleTextAlign,
             style: TextStyle(
               fontSize: width(
                 context,
@@ -127,6 +87,7 @@ class _FirstSection extends StatelessWidget {
           ),
           Text(
             'Selamat datang di halaman simpanan Koperasi Simpan Pinjam Bersama (UNINDRA) Simpanan, dapatkan informasi menarik seputar simpanan anggota',
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: width(
                 context,
@@ -151,60 +112,190 @@ class _FirstSection extends StatelessWidget {
         mobile: 36.0,
       )),
       color: Theme.of(context).colorScheme.primary,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: width(
-            context,
-            desktop: 88.0,
-            tablet: 44.0,
-            mobile: 20.0,
-          ),
-          horizontal: width(
-            context,
-            desktop: 68.0,
-            tablet: 36.0,
-            mobile: 16.0,
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        ),
-        child: Column(
-          children: [
-            Text(
-              'Member Login',
-              style: TextStyle(
-                fontSize: width(
-                  context,
-                  desktop: 24.0,
-                  tablet: 20.0,
-                  mobile: 16.0,
-                ),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: width(
+      child: BlocProvider<LoginFormBloc>(
+        create: (context) => sl(),
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) => Container(
+            padding: EdgeInsets.symmetric(
+              vertical: width(
                 context,
-                desktop: 71.0,
-                tablet: 46.0,
+                desktop: 88.0,
+                tablet: 44.0,
                 mobile: 20.0,
               ),
-            ),
-            SignInButton(
-              Buttons.Google,
-              onPressed: () {
-                context
-                    .read<LoginFormBloc>()
-                    .add(const LoginFormEvent.loggedIn());
-              },
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              horizontal: width(
+                context,
+                desktop: 68.0,
+                tablet: 36.0,
+                mobile: 16.0,
               ),
-              text: 'Masuk dengan Google',
             ),
-          ],
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+            ),
+            child: state.maybeWhen(
+              authenticated: (user) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 36.0,
+                    backgroundImage: user.photoURL != null
+                        ? NetworkImage(user.photoURL!)
+                        : null,
+                    backgroundColor: const Color(0xFFD9D9D9),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    user.displayName ?? '-',
+                    style: TextStyle(
+                      fontSize: width(
+                        context,
+                        desktop: 20.0,
+                        tablet: 16.0,
+                        mobile: 14.0,
+                      ),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  if (user.email != null)
+                    Text(
+                      user.email!,
+                      style: TextStyle(
+                        fontSize: width(
+                          context,
+                          desktop: 14.0,
+                          tablet: 12.0,
+                          mobile: 12.0,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 20.0),
+                  BlocListener<AuthBloc, AuthState>(
+                    listenWhen: (p, c) =>
+                        p.isAuthenticated && !c.isAuthenticated,
+                    listener: (context, state) {
+                      if (!state.isAuthenticated) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            InformationSnackBar(message: 'Berhasil keluar'));
+                      }
+                    },
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 30.0,
+                        ),
+                      ),
+                      onPressed: () {
+                        final isLoading =
+                            context.read<LoadingBloc>().state.when(
+                                  running: (_) => true,
+                                  stopped: () => false,
+                                );
+                        if (isLoading) return;
+                        context
+                            .read<AuthBloc>()
+                            .add(const AuthEvent.signedOut());
+                        context
+                            .read<LoadingBloc>()
+                            .add(const LoadingEvent.started());
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          context
+                              .read<LoadingBloc>()
+                              .add(const LoadingEvent.stopped());
+                        });
+                      },
+                      child: const Text('Keluar'),
+                    ),
+                  )
+                ],
+              ),
+              orElse: () => BlocConsumer<LoginFormBloc, LoginFormState>(
+                listener: (context, state) {
+                  if (state.isLoggingIn) {
+                    context
+                        .read<LoadingBloc>()
+                        .add(const LoadingEvent.started());
+                  } else {
+                    context
+                        .read<LoadingBloc>()
+                        .add(const LoadingEvent.stopped());
+                  }
+
+                  state.loginFailureOrSuccessOption.fold(
+                    () => null,
+                    (a) {
+                      a.fold(
+                        (l) => ScaffoldMessenger.of(context)
+                            .showSnackBar(FailureSnackBar(
+                          message: 'Terjadi error tidak terduga',
+                        )),
+                        (r) => r.fold(
+                          () => ScaffoldMessenger.of(context)
+                              .showSnackBar(InformationSnackBar(
+                            message: 'Masuk dengan Google dibatalkan',
+                          )),
+                          (a) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SuccessSnackBar(
+                              message: 'Berhasil masuk ke Google',
+                            ));
+                            context
+                                .read<AuthBloc>()
+                                .add(const AuthEvent.authCheckRequested());
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+                buildWhen: (p, c) => p.isLoggingIn != c.isLoggingIn,
+                builder: (context, state) => IgnorePointer(
+                  ignoring: state.isLoggingIn,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Member Login',
+                        style: TextStyle(
+                          fontSize: width(
+                            context,
+                            desktop: 24.0,
+                            tablet: 20.0,
+                            mobile: 16.0,
+                          ),
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: width(
+                          context,
+                          desktop: 71.0,
+                          tablet: 46.0,
+                          mobile: 20.0,
+                        ),
+                      ),
+                      SignInButton(
+                        Buttons.Google,
+                        onPressed: () {
+                          context
+                              .read<LoginFormBloc>()
+                              .add(const LoginFormEvent.loggedIn());
+                        },
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        ),
+                        text: 'Masuk dengan Google',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -227,43 +318,60 @@ class _SecondSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            'PRODUK SIMPANAN',
-            style: TextStyle(
-              fontSize: width(
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: width(
                 context,
-                desktop: 24.0,
-                tablet: 20.0,
-                mobile: 16.0,
-              ),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: width(
-              context,
-              desktop: 59.0,
-              tablet: 36.0,
-              mobile: 20.0,
-            ),
-          ),
-          Text(
-            'Beberapa produk simpanan berjangka yang ditawarkan',
-            style: TextStyle(
-              fontSize: width(
-                context,
-                desktop: 22.0,
-                tablet: 18.0,
-                mobile: 16.0,
+                desktop: 220.0,
+                tablet: 140.0,
+                mobile: 56.0,
               ),
             ),
-          ),
-          SizedBox(
-            height: width(
-              context,
-              desktop: 167.0,
-              tablet: 120.0,
-              mobile: 90.0,
+            child: DefaultTextStyle.merge(
+              textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Text(
+                    'PRODUK SIMPANAN',
+                    style: TextStyle(
+                      fontSize: width(
+                        context,
+                        desktop: 24.0,
+                        tablet: 20.0,
+                        mobile: 16.0,
+                      ),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    height: width(
+                      context,
+                      desktop: 59.0,
+                      tablet: 36.0,
+                      mobile: 20.0,
+                    ),
+                  ),
+                  Text(
+                    'Beberapa produk simpanan berjangka yang ditawarkan',
+                    style: TextStyle(
+                      fontSize: width(
+                        context,
+                        desktop: 22.0,
+                        tablet: 18.0,
+                        mobile: 16.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: width(
+                      context,
+                      desktop: 167.0,
+                      tablet: 120.0,
+                      mobile: 90.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(

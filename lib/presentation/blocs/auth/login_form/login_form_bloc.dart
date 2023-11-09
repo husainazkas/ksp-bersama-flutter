@@ -20,7 +20,10 @@ class LoginFormBloc extends Bloc<LoginFormEvent, LoginFormState> {
 
   Future<void> _onLoggedIn(
       LoginFormLoggedIn event, Emitter<LoginFormState> emit) async {
-    emit(state.copyWith(isLoggingIn: true));
+    emit(state.copyWith(
+      isLoggingIn: true,
+      loginFailureOrSuccessOption: const None(),
+    ));
 
     final loginFailureOrSuccess = await _loginWithGoogle(const NoParams());
 

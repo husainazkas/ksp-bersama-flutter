@@ -294,6 +294,7 @@ class _SecondSection extends StatelessWidget {
                 onPressed: onPressed,
                 child: Text(
                   'LEBIH LANJUT',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: width(
                       context,

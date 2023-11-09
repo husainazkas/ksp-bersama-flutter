@@ -215,6 +215,7 @@ class _SecondSection extends StatelessWidget {
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Stack(
+                  alignment: AlignmentDirectional.center,
                   children: [
                     Image.asset(
                       'assets/images/koperasi-indonesia-transparent.png',

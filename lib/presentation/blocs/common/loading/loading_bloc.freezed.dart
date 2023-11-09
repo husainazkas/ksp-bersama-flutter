@@ -402,8 +402,8 @@ class __$$LoadingRunningImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingRunningImpl implements _LoadingRunning {
-  const _$LoadingRunningImpl([this.message]);
+class _$LoadingRunningImpl extends _LoadingRunning {
+  const _$LoadingRunningImpl([this.message]) : super._();
 
   @override
   final String? message;
@@ -494,8 +494,9 @@ class _$LoadingRunningImpl implements _LoadingRunning {
   }
 }
 
-abstract class _LoadingRunning implements LoadingState {
+abstract class _LoadingRunning extends LoadingState {
   const factory _LoadingRunning([final String? message]) = _$LoadingRunningImpl;
+  const _LoadingRunning._() : super._();
 
   String? get message;
   @JsonKey(ignore: true)
@@ -521,8 +522,8 @@ class __$$LoadingStoppedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingStoppedImpl implements _LoadingStopped {
-  const _$LoadingStoppedImpl();
+class _$LoadingStoppedImpl extends _LoadingStopped {
+  const _$LoadingStoppedImpl() : super._();
 
   @override
   String toString() {
@@ -601,6 +602,7 @@ class _$LoadingStoppedImpl implements _LoadingStopped {
   }
 }
 
-abstract class _LoadingStopped implements LoadingState {
+abstract class _LoadingStopped extends LoadingState {
   const factory _LoadingStopped() = _$LoadingStoppedImpl;
+  const _LoadingStopped._() : super._();
 }
