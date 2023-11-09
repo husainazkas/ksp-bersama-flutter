@@ -50,30 +50,149 @@ class _NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     if (widget.isAlwaysCollapsed) {
-      return _buildAlwaysCollapsed();
+      return _buildAlwaysCollapsedNavBar();
     }
 
+    return _buildNavBar();
+  }
+
+  Widget _buildAlwaysCollapsedNavBar() {
     final location = GoRouterState.of(context).uri.toString();
     final size = MediaQuery.sizeOf(context);
     return SliverAppBar(
       pinned: true,
       automaticallyImplyLeading: false,
       actions: const [SizedBox()],
-      expandedHeight: _expandedHeight,
+      toolbarHeight: _collapsedHeight,
+      forceElevated: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      titleSpacing: 0.0,
+      title: _buildLogo(
+        showLogo: true,
+        children: size.width <= 600
+            ? [const EndDrawerButton()]
+            : [
+                _buildButton(
+                  context,
+                  label: 'Beranda',
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: width(
+                      context,
+                      desktop: 24.0,
+                      tablet: 18.0,
+                      mobile: 14.0,
+                    ),
+                  ),
+                  isSelected: location == '/',
+                  onPressed: () {
+                    context.go('/');
+                  },
+                ),
+                const SizedBox(width: 8.0),
+                _buildButton(
+                  context,
+                  label: 'Pinjaman',
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: width(
+                      context,
+                      desktop: 24.0,
+                      tablet: 18.0,
+                      mobile: 14.0,
+                    ),
+                  ),
+                  isSelected: location.startsWith('/loan'),
+                  onPressed: () {
+                    context.go('/loan');
+                  },
+                ),
+                const SizedBox(width: 8.0),
+                _buildButton(
+                  context,
+                  label: 'Simpanan',
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: width(
+                      context,
+                      desktop: 24.0,
+                      tablet: 18.0,
+                      mobile: 14.0,
+                    ),
+                  ),
+                  isSelected: location.startsWith('/saving'),
+                  onPressed: () {
+                    context.go('/saving');
+                  },
+                ),
+                const SizedBox(width: 8.0),
+                _buildButton(
+                  context,
+                  label: 'Tentang Kami',
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: width(
+                      context,
+                      desktop: 24.0,
+                      tablet: 18.0,
+                      mobile: 14.0,
+                    ),
+                  ),
+                  isSelected: location.startsWith('/about-us'),
+                  onPressed: () {
+                    context.go('/about-us');
+                  },
+                ),
+                const SizedBox(width: 8.0),
+                _buildButton(
+                  context,
+                  label: 'Hubungi Kami',
+                  labelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: width(
+                      context,
+                      desktop: 24.0,
+                      tablet: 18.0,
+                      mobile: 14.0,
+                    ),
+                  ),
+                  isSelected: location.startsWith('/contact-us'),
+                  onPressed: () {
+                    context.go('/contact-us');
+                  },
+                ),
+              ],
+      ),
+    );
+  }
+
+  Widget _buildNavBar() {
+    final location = GoRouterState.of(context).uri.toString();
+    final size = MediaQuery.sizeOf(context);
+    final isMobileSize = size.width <= 600;
+    return SliverAppBar(
+      pinned: true,
+      automaticallyImplyLeading: false,
+      actions: const [SizedBox()],
+      expandedHeight: isMobileSize ? null : _expandedHeight,
       collapsedHeight: _collapsedHeight,
       backgroundColor: const Color.fromARGB(0, 255, 255, 255),
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1.0,
         titlePadding: EdgeInsets.zero,
         title: AnimatedContainer(
-          height: _isCollapsed ? _collapsedHeight : 90.0,
+          height: _isCollapsed
+              ? _collapsedHeight
+              : isMobileSize
+                  ? _collapsedHeight - 98
+                  : 90.0,
           color: _isCollapsed
               ? Theme.of(context).colorScheme.background
               : Theme.of(context).colorScheme.primary,
           duration: kThemeAnimationDuration,
           child: _buildLogo(
             showLogo: _isCollapsed,
-            children: size.width <= 600 && _isCollapsed
+            children: isMobileSize && _isCollapsed
                 ? [
                     const EndDrawerButton(),
                   ]
@@ -184,119 +303,9 @@ class _NavigationBarState extends State<NavigationBar> {
           color: Theme.of(context).colorScheme.background,
           child: _buildLogo(
             crossAxisAlignment: CrossAxisAlignment.start,
+            children: isMobileSize ? [const EndDrawerButton()] : const [],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildAlwaysCollapsed() {
-    final location = GoRouterState.of(context).uri.toString();
-    final size = MediaQuery.sizeOf(context);
-    return SliverAppBar(
-      pinned: true,
-      automaticallyImplyLeading: false,
-      actions: const [SizedBox()],
-      toolbarHeight: _collapsedHeight,
-      forceElevated: true,
-      backgroundColor: Theme.of(context).colorScheme.background,
-      title: _buildLogo(
-        showLogo: true,
-        children: size.width <= 600
-            ? [
-                const EndDrawerButton(),
-              ]
-            : [
-                _buildButton(
-                  context,
-                  label: 'Beranda',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: width(
-                      context,
-                      desktop: 24.0,
-                      tablet: 18.0,
-                      mobile: 14.0,
-                    ),
-                  ),
-                  isSelected: location == '/',
-                  onPressed: () {
-                    context.go('/');
-                  },
-                ),
-                const SizedBox(width: 8.0),
-                _buildButton(
-                  context,
-                  label: 'Pinjaman',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: width(
-                      context,
-                      desktop: 24.0,
-                      tablet: 18.0,
-                      mobile: 14.0,
-                    ),
-                  ),
-                  isSelected: location.startsWith('/loan'),
-                  onPressed: () {
-                    context.go('/loan');
-                  },
-                ),
-                const SizedBox(width: 8.0),
-                _buildButton(
-                  context,
-                  label: 'Simpanan',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: width(
-                      context,
-                      desktop: 24.0,
-                      tablet: 18.0,
-                      mobile: 14.0,
-                    ),
-                  ),
-                  isSelected: location.startsWith('/saving'),
-                  onPressed: () {
-                    context.go('/saving');
-                  },
-                ),
-                const SizedBox(width: 8.0),
-                _buildButton(
-                  context,
-                  label: 'Tentang Kami',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: width(
-                      context,
-                      desktop: 24.0,
-                      tablet: 18.0,
-                      mobile: 14.0,
-                    ),
-                  ),
-                  isSelected: location.startsWith('/about-us'),
-                  onPressed: () {
-                    context.go('/about-us');
-                  },
-                ),
-                const SizedBox(width: 8.0),
-                _buildButton(
-                  context,
-                  label: 'Hubungi Kami',
-                  labelStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: width(
-                      context,
-                      desktop: 24.0,
-                      tablet: 18.0,
-                      mobile: 14.0,
-                    ),
-                  ),
-                  isSelected: location.startsWith('/contact-us'),
-                  onPressed: () {
-                    context.go('/contact-us');
-                  },
-                ),
-              ],
       ),
     );
   }
